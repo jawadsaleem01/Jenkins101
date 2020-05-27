@@ -143,3 +143,57 @@ networks:
 > docker-compose restart
 > docker-compose down this will delete everything
 > docker-compose up -d create docker containers
+> docker exec -ti jenkins bash = this will login container
+
+# 2. Running first Job 
+
+In this example we will create a java helloworld file on voludme(that will automatically) move to docker mount point.
+
+```
+cd /home/jawad/jenkins_home/
+mkdir javaExample
+touch HelloWorld.java
+gedit HelloWorld.java
+```
+
+copy below code in HelloWorld.java
+```
+class HelloWorld 
+{ 
+    // Your program begins with a call to main(). 
+    // Prints "Hello, World" to the terminal window. 
+    public static void main(String args[]) 
+    { 
+        System.out.println("Hello, World"); 
+    } 
+} 
+```
+
+goto your jenkins dashaord create a new job, in shell run the java file
+
+```
+pwd
+cd /var/jenkins_home/javaExample
+javac HelloWorld.java
+java HelloWorld
+```
+![java](https://github.com/jawad1989/Jenkins101/blob/master/images/1%20-%20jenkins%20java.PNG)
+
+
+Build the jenkins job
+
+goto console you will see the output
+
+```
+Started by user jawad
+Running as SYSTEM
+Building in workspace /var/jenkins_home/workspace/MyFirstJob-May27-540PM
+[MyFirstJob-May27-540PM] $ /bin/sh -xe /tmp/jenkins6324372263307166450.sh
++ pwd
+/var/jenkins_home/workspace/MyFirstJob-May27-540PM
++ cd /var/jenkins_home/javaExample
++ javac HelloWorld.java
++ java HelloWorld
+Hello, World
+Finished: SUCCESS
+```
