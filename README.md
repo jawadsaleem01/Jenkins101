@@ -10,6 +10,7 @@
    8. Create a Local DNS for Jenkins
  2. Running first Job 
  3. Running first script from Job
+ 4. Parameterize Job
  
    ***********
 # Jenkins101
@@ -225,3 +226,32 @@ cd /var/jenkins_home/jekins_data/
 ```
 * build the job and see the output
 ![output](https://github.com/jawad1989/Jenkins101/blob/master/images/2-%20console%20output.PNG)
+
+
+# 4. Parameterize Job
+
+We will use the script in the last example, but this time we will take the first and last name from user 
+* create a new job
+* in General section click `This project is parameterized`
+   ![Adding PArametes](https://github.com/jawad1989/Jenkins101/blob/master/images/3%20-Adding%20Parametes.PNG)
+* in Build us the parameters
+```
+cd /var/jenkins_home/jekins_data/
+./script.sh $FIRST_NAME $LAST_NAME
+```
+
+* build the job, jenkins will ask for the values and show the default values
+
+![sneding params](https://github.com/jawad1989/Jenkins101/blob/master/images/4%20-%20giving%20parameters.PNG)
+
+* see the CONSOLE output 
+```
+Started by user jawad
+Running as SYSTEM
+Building in workspace /var/jenkins_home/workspace/ParameterizedJob-May27-635PM
+[ParameterizedJob-May27-635PM] $ /bin/sh -xe /tmp/jenkins235872662254780424.sh
++ cd /var/jenkins_home/jekins_data/
++ ./script.sh HANIYA JAWAD
+Hello, HANIYA, JAWAD
+Finished: SUCCESS
+```
