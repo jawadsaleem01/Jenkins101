@@ -1,3 +1,14 @@
+# Table of Contents:
+1. installing jenkins in VM virtual Box ubuntu 18
+   1. Download ubuntu image
+   2. Setup VM in virtual box
+   3. install Docker Engine
+   4. Install Docker Compose
+   5. Install Docker Jenkins Image
+   6. Create Docker Compose for Jenkins
+   7. Create a Docker Container for Jenkins
+   8. Create a Local DNS for Jenkins
+   ***********
 # Jenkins101
     * [Install Jenkins Master Server](https://github.com/jawad1989/devops/tree/master/Jenkins)
     * Pipelines and Jobs
@@ -21,8 +32,8 @@
       * Pipeline Build View
     * Updating Jenkins to Newer Version
 
-# installing jenkins in VM virtual Box ubuntu 18
- ### 1. Download ubunut image
+# 1. installing jenkins in VM virtual Box ubuntu 18
+ ### 1. Download ubuntu image
  ### 2. Setup VM in virtual box
  ### 3. install Docker Engine <br/>
    https://docs.docker.com/engine/install/ubuntu/
@@ -81,7 +92,7 @@ networks:
  
   docker compose is like a defination for what things we want
 
- ### Create a Docker Container for Jenkins
+ ### 7. Create a Docker Container for Jenkins
   * make sure your user has proper rights on folders
   ```
   sudo chown 1000:1000 jenkins_home -R
@@ -117,7 +128,7 @@ networks:
  
  ![jenkins installed](https://github.com/jawad1989/Jenkins101/blob/master/images/10%20-jenknis.PNG)
  
- ### Create a Local DNS for Jenkins
+ ### 8. Create a Local DNS for Jenkins
  
  * Open notepad with admin rights
  * goto `C:\Windows\System32\drivers\etc`
