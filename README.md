@@ -118,3 +118,10 @@ networks:
  ![jenkins installed](https://github.com/jawad1989/Jenkins101/blob/master/images/10%20-jenknis.PNG)
  
  ### Create a Local DNS for Jenkins
+ 
+ * Open notepad with admin rights
+ * goto `C:\Windows\System32\drivers\etc`
+ * enter your ip in our case its `192.168.56.104 jenkins.local`
+ * goto brower and type `jenkins.local:8080` this will bring up the jenkins
+
+![jenkins dns](https://github.com/jawad1989/Jenkins101/blob/master/images/11%20-%20local%20dns.PNG)
