@@ -125,3 +125,10 @@ networks:
  * goto brower and type `jenkins.local:8080` this will bring up the jenkins
 
 ![jenkins dns](https://github.com/jawad1989/Jenkins101/blob/master/images/11%20-%20local%20dns.PNG)
+
+
+> to stop docker compose service docker-compose stop
+> to start docker-compose start
+> docker-compose restart
+> docker-compose down this will delete everything
+> docker-compose up -d create docker containers
