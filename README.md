@@ -107,7 +107,7 @@ networks:
  ![suggested](https://github.com/jawad1989/Jenkins101/blob/master/images/4%20-%20jenkins%20started.PNG)
  
  * plugins installing
- ![plugins](https://github.com/jawad1989/Jenkins101/blob/master/images/5%20-%20jenkins%20started.PNG)
+ ![plugins](https://github.com/jawad1989/Jenkins101/blob/master/images/6%20-%20plugins%20installed.PNG)
  
  
  ### Create a Local DNS for Jenkins
