@@ -8,6 +8,9 @@
    6. Create Docker Compose for Jenkins
    7. Create a Docker Container for Jenkins
    8. Create a Local DNS for Jenkins
+ 2. Running first Job 
+ 3. Running first script from Job
+ 
    ***********
 # Jenkins101
     * [Install Jenkins Master Server](https://github.com/jawad1989/devops/tree/master/Jenkins)
