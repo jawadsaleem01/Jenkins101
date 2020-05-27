@@ -197,3 +197,28 @@ Building in workspace /var/jenkins_home/workspace/MyFirstJob-May27-540PM
 Hello, World
 Finished: SUCCESS
 ```
+
+# 3. Running first script
+
+in this job we will create a simple script that will take name and last name as parameters and return Hello name and lastname
+
+* cd into jekins home
+* mkdir jekins_data
+* gedit script.sh and put below code
+```
+#!/bin/bash
+
+NAME=$1
+LAST=$2
+
+echo "Hello, $NAME, $LAST"
+```
+
+* goto jenkins create a job, goto configure and in Build section copy below commads
+
+```
+cd /var/jenkins_home/jekins_data/
+./script.sh JAWAD SALEEM
+```
+* build the job and see the output
+![output](https://github.com/jawad1989/Jenkins101/blob/master/images/2-%20console%20output.PNG)
