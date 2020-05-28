@@ -255,3 +255,34 @@ Building in workspace /var/jenkins_home/workspace/ParameterizedJob-May27-635PM
 Hello, HANIYA, JAWAD
 Finished: SUCCESS
 ```
+
+# 5. List Parameter Job
+
+We can use list for the parameter, to use this use `choice parameter` in jenkins
+
+![Choice](https://github.com/jawad1989/Jenkins101/blob/master/images/choice%20param.PNG)
+
+![Choice b](https://github.com/jawad1989/Jenkins101/blob/master/images/choice%20param%20b.PNG)
+
+# 5. Boolean Parameter Job
+
+Select Boolean option in jenkins job
+![Boolean](https://github.com/jawad1989/Jenkins101/blob/master/images/boolean.PNG)
+
+
+Script to be used
+
+```
+#!/bin/bash
+
+NAME=$1
+LAST=$2
+SHOW=$3
+
+if [ "$SHOW" = "true" ]; then
+ echo "Hello, $NAME $LAST"
+else
+ echo "Kindly mark SHOW option to show names"
+fi
+
+```
