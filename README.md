@@ -341,3 +341,23 @@ drwxr-xr-x 3 jawad jawad 4096 May 28 10:40 ../
 
 3. remote_key is a certificate key/private key
 4. remote_key.pub is a public key
+5. add more commands in Dockerfile
+```
+FROM centos
+
+RUN yum -y install openssh-server
+
+RUN useradd remote_user && \
+    echo "remote_user:1234" | chpasswd && \
+    mkdir /home/remote_user/.ssh && \
+    chmod 700 /home/remote_user/.ssh
+
+COPY remote-key.pub /home/remote_user/.ssh/authorized_key
+
+RUN chown remote_user:remote_user -R /home/remote_user/.ssh/ &&\
+    chmod 600 /home/remote_user/.ssh/authorized_keys
+
+RUN /usr/sbin/sshd-keygen
+
+CMD /use/sbin/sshd -D
+```
