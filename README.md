@@ -266,7 +266,8 @@ We can use list for the parameter, to use this use `choice parameter` in jenkins
 
 # 5. Boolean Parameter Job
 
-Select Boolean option in jenkins job
+Select Boolean option in jenkins job, if Default is checked it means true
+
 ![Boolean](https://github.com/jawad1989/Jenkins101/blob/master/images/boolean.PNG)
 
 
@@ -286,3 +287,57 @@ else
 fi
 
 ```
+# 6. Jenkins on Dockers
+
+* Create a new directory `centos`
+* pwd should return `/home/jawad/jenkins/jenkins_home/jekins_data/centos`
+* Create a Dockerfile
+we are installing a centos image, instlaling openssh server, creating a user, setting password, creating a new home directory and giving write permissions to the new user
+```
+FROM centos
+
+RUN yum -y install openssh-server
+RUN useradd remote_user && \
+    echo "remote_user:1234" | chpasswd && \
+    mkdir /home/remote_user/.ssh && \
+    chmod 700 /home/remote_user/.ssh
+```
+
+* Create a SSH key
+ 1. type `ssh-keygen -f remote-key` and press enter 3 times
+ ```
+ Generating public/private rsa key pair.
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in remote-key.
+Your public key has been saved in remote-key.pub.
+The key fingerprint is:
+SHA256:nrXFrSiX6H1nKUkPaY5CVVC966vL3XzJLknczbqIK+A jawad@jawad-VirtualBox
+The key's randomart image is:
++---[RSA 2048]----+
+|          .o..   |
+|            . .  |
+|           .   . |
+|          .. ..  |
+|        S.. +.oo.|
+|      ...+ ==+..o|
+|     . o= ==o=oo.|
+|      E.o+.o==B=.|
+|        .o+o=**++|
++----[SHA256]-----+
+
+ ```
+2. do a ls you will notice two files created
+```
+ll
+total 20
+drwxr-xr-x 2 jawad jawad 4096 May 28 10:56 ./
+drwxr-xr-x 3 jawad jawad 4096 May 28 10:40 ../
+-rw-r--r-- 1 jawad jawad  196 May 28 10:47 Dockerfile
+-rw------- 1 jawad jawad 1679 May 28 10:56 remote-key
+-rw-r--r-- 1 jawad jawad  404 May 28 10:56 remote-key.pub
+
+```
+
+3. remote_key is a certificate key/private key
+4. remote_key.pub is a public key
