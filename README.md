@@ -289,6 +289,8 @@ fi
 ```
 # 6. Jenkins on Dockers
 
+## 6.1. Docker + Jenkins + SSH
+
 * Create a new directory `centos`
 * pwd should return `/home/jawad/jenkins/jenkins_home/jekins_data/centos`
 * Create a Dockerfile
