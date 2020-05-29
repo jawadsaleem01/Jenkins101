@@ -344,6 +344,7 @@ drwxr-xr-x 3 jawad jawad 4096 May 28 10:40 ../
 3. remote_key is a certificate key/private key
 4. remote_key.pub is a public key
 5. add more commands in Dockerfile
+jawad@jawad-VirtualBox:~/jenkins/centos$ cat Dockerfile 
 ```
 FROM centos
 
@@ -354,12 +355,59 @@ RUN useradd remote_user && \
     mkdir /home/remote_user/.ssh && \
     chmod 700 /home/remote_user/.ssh
 
-COPY remote-key.pub /home/remote_user/.ssh/authorized_key
+COPY remote-key.pub /home/remote_user/.ssh/authorized_keys
 
 RUN chown remote_user:remote_user -R /home/remote_user/.ssh/ &&\
     chmod 600 /home/remote_user/.ssh/authorized_keys
 
-RUN /usr/sbin/sshd-keygen
+#RUN /usr/sbin/sshd-keygen
+RUN ssh-keygen -A && rm -rf /run/nologin
 
-CMD /use/sbin/sshd -D
+CMD /usr/sbin/sshd -D
 ```
+6. update docker-compose file
+  here we will add our new image "remote_host"
+  ```
+  version: '3'
+services:
+  jenkins:
+    container_name: jenkins
+    image: jenkins/jenkins
+    ports:
+      - "8080:8080"
+    volumes:
+      - $PWD/jenkins_home:/var/jenkins_home # left host vol : right docker vol
+    networks:
+      - net
+  remote_host:
+    container_name: remote-host
+    image: remote-host
+    build:
+      context: centos
+    networks:
+      - net
+networks:
+  net:
+  ```
+ 7. build new docker image 'remote_user' by running `docker-compose build`
+ 8. now if you run 'docker images' you will see the new image 'remote_user' but still container is not created
+ 9. run 'docker-compose up -d' to run the container. in case of any error run 'dokcer logs container_id'
+ 10. run 'docker ps' to see the container
+ 11. now test your new ssh connection by going into jenkins
+     ```
+     docker exec -it jenkins bash
+     
+     ssh remote_user@remote_host
+     give password 1234 you will be logged in
+     ```
+ 12. log in via 'remote-key' which we generated earlier
+ 13. exit and goto /centos directory and run below command
+ ```
+ docker cp remote-key jenkins:/tmp/remote-key
+ ```
+ 14. goto jenkins 'docker exec -it jenkins bash' and `cd /tmd` you will see the remote-key file here
+ 15. login using remote-key
+ ```
+ ssh -it remote-key remote_user@remote_host
+ ```
+ you will be logged in without giving password
