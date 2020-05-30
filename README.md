@@ -422,4 +422,13 @@ networks:
    ![ssh](https://github.com/jawad1989/Jenkins101/blob/master/images/1-plugin-ssh.PNG)
   6. click restart option and wait for jenkins to restart
    ![restart](https://github.com/jawad1989/Jenkins101/blob/master/images/2-restart%20shh.PNG)
-  7. 
+  7. after restart, goto credentials, add a new global credential
+  
+  ![add credentials](https://github.com/jawad1989/Jenkins101/blob/master/images/2b-credentials.PNG)
+  
+  ![add new credentials](https://github.com/jawad1989/Jenkins101/blob/master/images/2c-add-credentials.PNG)
+  
+  8. goto `Manage jenkins->Configure System` in ssh add a new connection with below details and test it
+  
+  ![manage ssh](https://github.com/jawad1989/Jenkins101/blob/master/images/3%20b%20-%20add%20ssh.PNG)
+  
