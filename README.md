@@ -11,7 +11,7 @@
  2. Running first Job 
  3. Running first script from Job
  4. Parameterize Job
- 
+ 10. install AWS CLI and mysql Client on docker
    ***********
 # Jenkins101
     * [Install Jenkins Master Server](https://github.com/jawad1989/devops/tree/master/Jenkins)
@@ -506,3 +506,44 @@ networks:
  ```
  ![show databases](https://github.com/jawad1989/Jenkins101/blob/master/images/5-show%20databases.PNG)
  
+ # 10. install AWS CLI and mysql Client on docker
+  1. update `Dockerfile` in `centos` directory for `remote_host`
+  
+  ```
+  FROM centos
+
+RUN yum -y install openssh-server
+
+RUN useradd remote_user && \
+    echo "remote_user:1234" | chpasswd && \
+    mkdir /home/remote_user/.ssh && \
+    chmod 700 /home/remote_user/.ssh
+
+COPY remote-key.pub /home/remote_user/.ssh/authorized_keys
+
+RUN chown remote_user:remote_user -R /home/remote_user/.ssh/ &&\
+    chmod 600 /home/remote_user/.ssh/authorized_keys
+
+#RUN /usr/sbin/sshd-keygen
+RUN ssh-keygen -A && rm -rf /run/nologin
+
+#intall mysql
+RUN yum -y install mysql
+
+# install AWS CLI
+RUN yum -y install epel-release && \
+    yum -y install python3-pip && \
+    pip3 install --upgrade pip && \
+    pip3 install awscli
+
+CMD /usr/sbin/sshd -D
+
+  ```
+  
+  2. build `docker-compose build`  and run the container `docker-compose up -d`
+  3. exec into remote_hose and verify aws/mysal
+  ```
+  docker exec -ti remote_host bash
+  aws
+  mysql
+  ```
