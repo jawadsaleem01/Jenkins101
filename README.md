@@ -411,3 +411,15 @@ networks:
  ssh -it remote-key remote_user@remote_host
  ```
  you will be logged in without giving password
+
+
+# 7. Install Plugin: ssh
+  1. goto jenkins dashboad
+  2. goto manage jenkins
+  3. goto manage plugins
+  4. goto available, type `ssh`
+  5. click ssh and click install with out restart
+   ![ssh](https://github.com/jawad1989/Jenkins101/blob/master/images/1-plugin-ssh.PNG)
+  6. click restart option and wait for jenkins to restart
+   ![restart](https://github.com/jawad1989/Jenkins101/blob/master/images/2-restart%20shh.PNG)
+  7. 
