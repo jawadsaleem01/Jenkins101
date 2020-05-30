@@ -438,3 +438,17 @@ networks:
   
   ![manage ssh](https://github.com/jawad1989/Jenkins101/blob/master/images/3%20b%20-%20add%20ssh.PNG)
   
+# 8. Create a jenkins job using SSH 
+ 1. Create a new freestyle job
+ 2. Select `Execute shell script on remote host using ssh`
+ 3. add the below command in build
+ 
+ ```
+ NAME=JAWAD
+ echo "Hello, $NAME and current date is $(date)" > /tmp/remote-file-jenkins
+ ```
+ 
+ 4. click save and click build job
+ 5. Once Successfull you can ssh into `remote_host` and cat the file on container 
+ 
+ ![tmp](https://github.com/jawad1989/Jenkins101/blob/master/images/4-build-ssh.PNG)
