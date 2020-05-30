@@ -419,12 +419,18 @@ networks:
   3. goto manage plugins
   4. goto available, type `ssh`
   5. click ssh and click install with out restart
+  
    ![ssh](https://github.com/jawad1989/Jenkins101/blob/master/images/1-plugin-ssh.PNG)
+   
   6. click restart option and wait for jenkins to restart
+  
    ![restart](https://github.com/jawad1989/Jenkins101/blob/master/images/2-restart%20shh.PNG)
+   
   7. after restart, goto credentials, add a new global credential
   
   ![add credentials](https://github.com/jawad1989/Jenkins101/blob/master/images/2b-credentials.PNG)
+  
+  we also have to copy the private `remote_key` for that we can goto jenkins container and copy that.
   
   ![add new credentials](https://github.com/jawad1989/Jenkins101/blob/master/images/2c-add-credentials.PNG)
   
