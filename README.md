@@ -452,3 +452,57 @@ networks:
  5. Once Successfull you can ssh into `remote_host` and cat the file on container 
  
  ![tmp](https://github.com/jawad1989/Jenkins101/blob/master/images/4-build-ssh.PNG)
+
+# 9. Running MYSQL in docker
+
+https://hub.docker.com/_/mysql
+
+1. Create/update `docker-compole.yml`
+  ***MYSQL_ROOT_PASSWORD*** is required by mysql image, you can check in mysql image link provided above. Also mysql volume location would be `/var/lib/mysql` also can be verified in above link.
+  
+ ```
+version: '3'
+services:
+  jenkins:
+    container_name: jenkins
+    image: jenkins/jenkins
+    ports:
+      - "8080:8080"
+    volumes:
+      - $PWD/jenkins_home:/var/jenkins_home # left host vol : right docker vol
+    networks:
+      - net
+  remote_host:
+    container_name: remote-host
+    image: remote-host
+    build:
+      context: centos
+    networks:
+      - net
+  db_host: 
+    container_name: mysql
+    image: mysql:5.7
+    environment: 
+      - "MYSQL_ROOT_PASSWORD=1234"
+    volumes: 
+      - "$PWD/db_data:/var/lib/mysql"
+    networks:
+      - net
+networks:
+  net: 
+
+ ```
+ 2. Start docker-compose by running `docker-compose up -d`
+ 3. Run `docker ps` to verify
+ 4. Check if mysql is up and runnin by running `docker logs -f mysql`
+ 5. login into mysql 
+ ```
+ docker exec -ti mysql bash
+ ```
+ 6. connect mysql using user `root` and password `1234` as given in docker-compose file and run `show databases`
+ ```
+ mysql -u root -p
+ show databases;
+ ```
+ ![show databases](https://github.com/jawad1989/Jenkins101/blob/master/images/5-show%20databases.PNG)
+ 
