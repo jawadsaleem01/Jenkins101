@@ -16,8 +16,8 @@
  7. [Jenkisn On Docker Container](#7-jenkins-on-dockers)
  8. [Install SSH Plugin](#8-install-plugin-ssh)
  9. [Create a jenkins job using SSH](#9-create-a-jenkins-job-using-ssh)
- 10. [Running MYSQL in docker]( #9-running-mysql-in-docker)
- 10. install AWS CLI and mysql Client on docker
+ 10. [Running MYSQL in docker](#10-running-mysql-in-docker)
+ 10. [install AWS CLI and mysql Client on docker](#11-install-aws-cli-and-mysql-client-on-docker)
    ***********
 # Jenkins101
     * [Install Jenkins Master Server](https://github.com/jawad1989/devops/tree/master/Jenkins)
