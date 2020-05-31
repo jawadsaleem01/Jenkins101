@@ -12,6 +12,11 @@
  3. [Running first script from Job](#3-running-first-script)
  4. [Parameterize Job](#4-parameterize-job)
  5. [List Parameter Job](#5-list-parameter-job)
+ 6. [Boolean Parameter Job](#6-boolean-parameter-job)
+ 7. [Jenkisn On Docker Container](#7-jenkins-on-dockers)
+ 8. [Install SSH Plugin](#8-install-plugin-ssh)
+ 9. [Create a jenkins job using SSH](#9-create-a-jenkins-job-using-ssh)
+ 10. [Running MYSQL in docker]( #9-running-mysql-in-docker)
  10. install AWS CLI and mysql Client on docker
    ***********
 # Jenkins101
