@@ -1,5 +1,5 @@
 # Table of Contents:
-1. installing jenkins in VM virtual Box ubuntu 18
+1. [installing jenkins in VM virtual Box ubuntu 18](#1-installing-jenkins-in-vm-virtual-box-ubuntu-18)
    1. Download ubuntu image
    2. Setup VM in virtual box
    3. install Docker Engine
@@ -8,9 +8,10 @@
    6. Create Docker Compose for Jenkins
    7. Create a Docker Container for Jenkins
    8. Create a Local DNS for Jenkins
- 2. Running first Job 
- 3. Running first script from Job
- 4. Parameterize Job
+ 2. [Running first Job](#2-running-first-job)
+ 3. [Running first script from Job](#3-running-first-script)
+ 4. [Parameterize Job](#4-parameterize-job)
+ 5. [List Parameter Job](#5-list-parameter-job)
  10. install AWS CLI and mysql Client on docker
    ***********
 # Jenkins101
@@ -264,7 +265,7 @@ We can use list for the parameter, to use this use `choice parameter` in jenkins
 
 ![Choice b](https://github.com/jawad1989/Jenkins101/blob/master/images/choice%20param%20b.PNG)
 
-# 5. Boolean Parameter Job
+# 6. Boolean Parameter Job
 
 Select Boolean option in jenkins job, if Default is checked it means true
 
@@ -287,9 +288,9 @@ else
 fi
 
 ```
-# 6. Jenkins on Dockers
+# 7. Jenkins on Dockers
 
-## 6.1. Docker + Jenkins + SSH
+## 7.1. Docker + Jenkins + SSH
 
 * Create a new directory `centos`
 * pwd should return `/home/jawad/jenkins/jenkins_home/jekins_data/centos`
@@ -413,7 +414,7 @@ networks:
  you will be logged in without giving password
 
 
-# 7. Install Plugin: ssh
+# 8. Install Plugin: ssh
   1. goto jenkins dashboad
   2. goto manage jenkins
   3. goto manage plugins
@@ -438,7 +439,7 @@ networks:
   
   ![manage ssh](https://github.com/jawad1989/Jenkins101/blob/master/images/3%20b%20-%20add%20ssh.PNG)
   
-# 8. Create a jenkins job using SSH 
+# 9. Create a jenkins job using SSH 
  1. Create a new freestyle job
  2. Select `Execute shell script on remote host using ssh`
  3. add the below command in build
@@ -453,7 +454,7 @@ networks:
  
  ![tmp](https://github.com/jawad1989/Jenkins101/blob/master/images/4-build-ssh.PNG)
 
-# 9. Running MYSQL in docker
+# 10. Running MYSQL in docker
 
 https://hub.docker.com/_/mysql
 
@@ -506,7 +507,7 @@ networks:
  ```
  ![show databases](https://github.com/jawad1989/Jenkins101/blob/master/images/5-show%20databases.PNG)
  
- # 10. install AWS CLI and mysql Client on docker
+ # 11. install AWS CLI and mysql Client on docker
   1. update `Dockerfile` in `centos` directory for `remote_host`
   
   ```
