@@ -25,6 +25,7 @@
  14. [Create a Script to take backup]()
  15. [Integrate your script with AWS CLI]
  16. [Jenkins Add AWS SECRET and MYSQL Password in Credentials]
+ 17. Create Jenkins job to run the script
    ***********
 # Jenkins101
     * [Install Jenkins Master Server](https://github.com/jawad1989/devops/tree/master/Jenkins)
@@ -673,3 +674,73 @@ aws s3 cp /tmp/$BACKUP_FILE s3://$BUCKET_NAME/$BACKUP_FILE
 ![MYSQL Password](https://github.com/jawad1989/Jenkins101/blob/master/images/7-JENKINS-MYSQL-credential.PNG)
 
 ![AWS](https://github.com/jawad1989/Jenkins101/blob/master/images/7-JENKINS-AWS-SECRET-KEY-credential.PNG)
+
+
+# 17. Create Jenkins job to run the script
+
+* update the script.sh to accept more parameters and upload file to AWS
+
+```
+#/bin/bash
+
+DATE=$(date +%H-%M-%S)
+BACKUP_FILE=db_$DATE.sql
+
+DB_HOST=$1
+DB_PASSWORD=$2
+DB_NAME=$3
+AWS_SECRET=$4
+BUCKET_NAME=$5
+
+mysqldump -u root -h $DB_HOST -p$DB_PASSWORD $DB_NAME > /tmp/$BACKUP_FILE
+
+export AWS_ACCESS_KEY_ID=AKIAZPZIIH2GW5BNQ6GB && \
+export AWS_SECRET_ACCESS_KEY=$AWS_SECRET && \
+echo "uploading mysql backup to to aws s3 bucket" && \
+aws s3 cp /tmp/$BACKUP_FILE s3://$BUCKET_NAME/$BACKUP_FILE
+
+```
+* In jenkins create a free style job and three parameters 
+
+1. String Parameter
+NAME:MYSQL_HOST
+DEFAULT:db_host
+
+2. STRING PARAMETER
+NAME: DATABASE_NAME
+VALUE: testdb
+
+3. STRING PARAMETER
+NAME: AWS_S3_BUCKET_NAME
+DEFAULT: jenkins-mysql-backup-jawad
+
+* In build  Environment section check `Use secret text(s) or file(s)` and add those two secret file parameters
+![bindings](https://github.com/jawad1989/Jenkins101/blob/master/images/8-bindinds.PNG)
+
+* Run the job and job will be successfull
+Console Output:
+```
+Started by user jawad
+Running as SYSTEM
+Building in workspace /var/jenkins_home/workspace/AWS-S3-SQL-BACKUP-MAY31st-1117PM
+[SSH] script:
+AWS_S3_BUCKET_NAME="jenkins-mysql-backup-jawad"
+MYSQL_HOST="db_host"
+AWS_SECRET_KEY=**********
+MYSQL_PASSWORD=**********
+DATABASE_NAME="testdb"
+
+/tmp/script.sh $MYSQL_HOST $MYSQL_PASSWORD $DATABASE_NAME $AWS_SECRET_KEY $AWS_S3_BUCKET_NAME
+
+[SSH] executing...
+mysqldump: [Warning] Using a password on the command line interface can be insecure.
+mysqldump: Couldn't execute 'SELECT COLUMN_NAME,                       JSON_EXTRACT(HISTOGRAM, '$."number-of-buckets-specified"')                FROM information_schema.COLUMN_STATISTICS                WHERE SCHEMA_NAME = 'testdb' AND TABLE_NAME = 'info';': Unknown table 'COLUMN_STATISTICS' in information_schema (1109)
+uploading mysql backup to to aws s3 bucket
+Completed 1.4 KiB/1.4 KiB (4.2 KiB/s) with 1 file(s) remaining
+upload: ../../tmp/db_05-01-19.sql to s3://jenkins-mysql-backup-jawad/db_05-01-19.sql
+
+[SSH] completed
+[SSH] exit-status: 0
+
+Finished: SUCCESS
+```
