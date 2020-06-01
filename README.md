@@ -579,6 +579,9 @@ CMD /usr/sbin/sshd -D
  ```
  
  # 13. Take MYsql backup and copy in AWS S3 bucket
+ Pre Req:
+ Create a IAM user on AWS and assign S3 Full Access
+ 
  1. login in `remote_host`
  ```
  docker exec -ti remote-host bash
