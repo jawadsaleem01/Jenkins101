@@ -23,6 +23,7 @@
       12.2. [insert data in table]
  13. [Create a AWS S3 bucket](#13-take-mysql-backup-and-copy-in-aws-s3-bucket)
  14. [Create a Script to take backup]()
+ 15. [Integrate your script with AWS CLI]
    ***********
 # Jenkins101
     * [Install Jenkins Master Server](https://github.com/jawad1989/devops/tree/master/Jenkins)
@@ -637,4 +638,27 @@ chmod +x /tmp/script.sh
 ```
 cd /tmp/
 ls
+```
+
+# 15. Integrate your script with AWS CLI
+
+open the script in vi `vi /tmp/script.sh`
+```
+#/bin/bash
+
+DATE=$(date +%H-%M-%S)
+$BACUP_FILE=db_$DATE.sql
+
+DB_HOST=$1
+DB_PASSWORD=$2
+DB_NAME=$3
+$AWS_SECRET=$4
+$BUCKET_NAME=$5
+
+mysqldump -u root -h $DB_HOST -p$DB_PASSWORD $DB_NAME > /tmp/$BACKUP_FILE
+
+export AWS_ACCESS_KEY_ID=AKIAZPZIIH2GW5BNQ6GB && \
+export AWS_SECRET_ACCESS_KEY=$AWS_SECRET && \
+echo "uploading mysql backup to to aws s3 bucket" && \
+aws s3 cp /tmp/$BACKUP_FILE s3://$BUCKET_NAME/$BACKUP_FILE
 ```
