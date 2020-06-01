@@ -24,6 +24,7 @@
  13. [Create a AWS S3 bucket](#13-take-mysql-backup-and-copy-in-aws-s3-bucket)
  14. [Create a Script to take backup]()
  15. [Integrate your script with AWS CLI]
+ 16. [Jenkins Add AWS SECRET and MYSQL Password in Credentials]
    ***********
 # Jenkins101
     * [Install Jenkins Master Server](https://github.com/jawad1989/devops/tree/master/Jenkins)
@@ -662,3 +663,13 @@ export AWS_SECRET_ACCESS_KEY=$AWS_SECRET && \
 echo "uploading mysql backup to to aws s3 bucket" && \
 aws s3 cp /tmp/$BACKUP_FILE s3://$BUCKET_NAME/$BACKUP_FILE
 ```
+
+# 16. [Jenkins Add AWS SECRET and MYSQL Password in Credentials
+
+1. Goto jenkins dasboard
+2. goto credentials. press add new
+3. select 'SECRET with text' and create one for `MYSQL_PASSWORD` and other for `AWS_SECRET_KEY`
+
+![MYSQL Password](https://github.com/jawad1989/Jenkins101/blob/master/images/7-JENKINS-MYSQL-credential.PNG)
+
+![AWS](https://github.com/jawad1989/Jenkins101/blob/master/images/7-JENKINS-AWS-SECRET-KEY-credential.PNG)
