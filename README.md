@@ -17,7 +17,11 @@
  8. [Install SSH Plugin](#8-install-plugin-ssh)
  9. [Create a jenkins job using SSH](#9-create-a-jenkins-job-using-ssh)
  10. [Running MYSQL in docker](#10-running-mysql-in-docker)
- 10. [install AWS CLI and mysql Client on docker](#11-install-aws-cli-and-mysql-client-on-docker)
+ 11. [install AWS CLI and mysql Client on docker](#11-install-aws-cli-and-mysql-client-on-docker)
+ 12. [Create a MySQL database]()
+      12.1. [Create a table]
+      12.2. [insert data in table]
+ 13. [Create a AWS S3 bucket]
    ***********
 # Jenkins101
     * [Install Jenkins Master Server](https://github.com/jawad1989/devops/tree/master/Jenkins)
@@ -553,3 +557,46 @@ CMD /usr/sbin/sshd -D
   aws
   mysql
   ```
+# 12. Create a MYSQL Database
+ 1. Connect to `remote_host` comtainer
+ ```
+ docker exec -ti remote-host bash
+ ```
+ 2. connect mysql
+ ```
+ mysql -u root -h db_host -p
+ ```
+ 3. Once logged in, run below commands 
+ ```
+ SHOW DATABASES;
+ CREATE DATABASE testdb;
+ use testdb;
+ create table info (name varchar(20), lastname varchar(20), age int(2));
+ show tables;
+ insert into info values ('jawad', 'saleem', 30);
+ desc info;
+ select * from info;
+ ```
+ 
+ # 13. Take MYsql backup and copy in AWS S3 bucket
+ 1. login in `remote_host`
+ ```
+ docker exec -ti remote-host bash
+ ```
+ 2. take backup and place in tmp folder
+ ```
+ mysqldump -u root -h db_host -p testdb /tmp/dbbkp.sql
+ ```
+ 3. you can verify by doing a cd in tmp and cat back up file
+ 4. now move the file to AWS S3 bucket
+ ```
+ aws s3 cp dbbkp.sql s3://jenkins-mysql-backup-jawad/dbbkp.sql
+ output: upload: ./dbbkp.sql to s3://jenkins-mysql-backup-jawad/dbbkp.sql
+ ```
+ ![aws s3](https://github.com/jawad1989/Jenkins101/blob/master/images/6-%20aws%20s3%20bkp%20sql.PNG)
+ 
+ 
+
+
+AKIAZPZIIH2GW5BNQ6GB
+tnK6rvBRjiWEl12pDXfMnSB/lF4nAlLZZhaauZSj
