@@ -26,6 +26,8 @@
  15. [Integrate your script with AWS CLI]
  16. [Jenkins Add AWS SECRET and MYSQL Password in Credentials]
  17. Create Jenkins job to run the script
+ 18, Persist your script on remote-host 
+  
    ***********
 # Jenkins101
     * [Install Jenkins Master Server](https://github.com/jawad1989/devops/tree/master/Jenkins)
@@ -743,4 +745,51 @@ upload: ../../tmp/db_05-01-19.sql to s3://jenkins-mysql-backup-jawad/db_05-01-19
 [SSH] exit-status: 0
 
 Finished: SUCCESS
+```
+
+
+18, Persist your script on remote-host
+
+if we remove the container remote-host our script will be deleted as we are not using volumes, to sovle this update the docker-compose file as per below and also copy/create script.sh to jenkins folder as `aws-s3.sh` so we can use this to copy into remote-host tmp folder
+```
+version: '3'
+services:
+  jenkins:
+    container_name: jenkins
+    image: jenkins/jenkins
+    ports:
+      - "8080:8080"
+    volumes:
+      - $PWD/jenkins_home:/var/jenkins_home # left host vol : right docker vol
+    networks:
+      - net
+  remote_host:
+    container_name: remote-host
+    image: remote-host
+    build:
+      context: centos
+    volumes:
+      - "$PWD/aws-s3.sh:/tmp/script.sh"
+    networks:
+      - net
+  db_host: 
+    container_name: mysql
+    image: mysql:5.7
+    environment: 
+      - "MYSQL_ROOT_PASSWORD=1234"
+    volumes: 
+      - "$PWD/db_data:/var/lib/mysql"
+    networks:
+      - net
+networks:
+  net:
+```
+now test it by removing the conainer
+```
+docker rm -fv remote-host
+```
+
+recreate it 
+```
+docker-compose up -d
 ```
