@@ -26,7 +26,8 @@
  15. [Integrate your script with AWS CLI]
  16. [Jenkins Add AWS SECRET and MYSQL Password in Credentials]
  17. Create Jenkins job to run the script
- 18, Persist your script on remote-host 
+ 18. Persist your script on remote-host 
+ 19. Install Ansible on jenkins 
   
    ***********
 # Jenkins101
@@ -792,4 +793,83 @@ docker rm -fv remote-host
 recreate it 
 ```
 docker-compose up -d
+```
+
+
+# 19. Install Ansible on jenkins 
+
+1. in your jenkins directory create a new folder `jenkins-ansible`
+```
+mkdir jenkins-ansible
+```
+2. cd into jenkins-ansible directory and create a `Dockerfile` and below is the content of that file
+```
+FROM jenkins/jenkins
+
+USER root
+
+RUN apt-get update && apt-get install python3-pip -y && \
+    pip3 install ansible --upgrade
+    
+USER jenkins
+```
+
+3. cd back into jenkins folder and update the `docker-compose.yml`
+```
+version: '3'
+services:
+  jenkins:
+    container_name: jenkins
+    image: jenkins/jenkins
+    build:
+      context: jenkins-ansible  #docker file path 
+    ports:
+      - "8080:8080"
+    volumes:
+      - $PWD/jenkins_home:/var/jenkins_home # left host vol : right docker vol
+    networks:
+      - net
+  remote_host:
+    container_name: remote-host
+    image: remote-host
+    build:
+      context: centos
+    volumes:
+      - "$PWD/aws-s3.sh:/tmp/script.sh"
+    networks:
+      - net
+  db_host: 
+    container_name: mysql
+    image: mysql:5.7
+    environment: 
+      - "MYSQL_ROOT_PASSWORD=1234"
+    volumes: 
+      - "$PWD/db_data:/var/lib/mysql"
+    networks:
+      - net
+networks:
+  net:
+```
+
+4. build docker compose and start the container
+```
+docker-compose build
+docker-compose up -d
+```
+
+5. create a new directory `ansible` in jenkins_home (volume for jenkins)  and copy the `centos/remote-key` that directory 
+
+```
+mkdir jenkins_home/ansible
+cp centos/remote-key jenkins_home/ansible
+```
+
+6. verify if file is created/copied login into jenkins container
+```
+docker exec -ti jenkins bash
+cd $HOME
+pwd
+cd ansible
+ls 
+# you will see the remote-key here
 ```
