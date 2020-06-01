@@ -22,6 +22,7 @@
       12.1. [Create a table]
       12.2. [insert data in table]
  13. [Create a AWS S3 bucket](#13-take-mysql-backup-and-copy-in-aws-s3-bucket)
+ 14. [Create a Script to take backup]()
    ***********
 # Jenkins101
     * [Install Jenkins Master Server](https://github.com/jawad1989/devops/tree/master/Jenkins)
@@ -603,3 +604,37 @@ CMD /usr/sbin/sshd -D
 
 AKIAZPZIIH2GW5BNQ6GB
 tnK6rvBRjiWEl12pDXfMnSB/lF4nAlLZZhaauZSj
+
+
+# 14. Create a Script to take backup
+1. follow below commnads to create a script in temp directory that will genearte a backup fil in tmp directory
+```
+cd
+vi /tmp/script.sh
+```
+
+in script.sh
+```
+#/bin/bash
+
+DATE=$(date +%H-%M-%S)
+DB_HOST=$1
+DB_PASSWORD=$2
+DB_NAME=$3
+
+mysqldump -u root -h $DB_HOST -p$DB_PASSWORD $DB_NAME > /tmp/db-$DATE.sql
+```
+
+2. give write/execute permisions 
+```
+chmod +x /tmp/script.sh
+```
+3. run script
+```
+/tmp/script.sh
+```
+4. verify backup is created in tmp directory
+```
+cd /tmp/
+ls
+```
