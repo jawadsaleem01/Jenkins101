@@ -1048,3 +1048,140 @@ value: jawad saleem
   desc register;
   ```
   2. Create a bash script to feed your Database
+  * create a file `people.txt` with some random data of user like
+  ```
+Denice,Caudle  
+Cherise,Olenick  
+Nohemi,Overlock  
+Tom,Fellers  
+Teri,Mess  
+Violette,Zawislak  
+Gisele,Cremeans  
+Rey,Sturdevant  
+Jeannine,Hysell  
+Preston,Manigault  
+Cinda,Dales  
+Shaniqua,Barnaby  
+Julieann,Fountaine  
+Georgianna,Leigh  
+Jana,Putnam  
+Kimber,Doescher  
+Eli,Moya  
+Louanne,Osbourn  
+Elaine,Sindelar  
+Keren,Beecham  
+Pamella,Nordstrom  
+Venice,Rudisill  
+Monroe,Sires  
+Rosalinda,Strickler  
+Juli,Laclair  
+Violeta,Rosier  
+Janessa,Bearden  
+Dani,Tokarz  
+Danial,Nesler  
+Love,Ashford  
+Horace,Jerez  
+Lanita,Rizzi  
+Wilburn,Human  
+Ike,Bolyard  
+Victorina,Bethea  
+Tamisha,Sweetman  
+Tyrell,Giorgi  
+Andra,Redmon  
+Kristina,Collins  
+Adah,Sidebottom  
+Fannie,Spector  
+Kittie,Jacobus  
+Marcy,Bronstein  
+Lavon,Degraffenreid  
+Mabel,Ecker  
+Branden,Tippie  
+Wendell,Saner  
+Meg,Feely  
+Lavone,Saam  
+Rachele,Lichtenberger 
+  
+  ```
+  * create a script `put.sh` in jenkins/jenkins-ansible directory
+  ```
+  #!/bin/bash
+
+counter=0
+
+while [ $counter -lt 50 ]; do
+  let counter=counter+1
+
+  name=$(nl people.txt | grep -w $counter | awk '{print $2}' | awk -F  ',' '{print $1}')
+  lastname=$(nl people.txt | grep -w $counter | awk '{print $2}' | awk -F  ',' '{print $2}')
+  age=$(shuf -i 20-40 -n 1)
+  #echo "firstname = $name , lastname= $lastname"
+
+  mysql -u root -p1234 people -e "insert into register values($counter,'$name','$lastname',$age)"
+  echo "$counter, $name, $lastname, $age insserted successfully"
+done
+  ```
+  
+  * give execute permission to script
+  ```
+  chmod +x put.sh
+  ```
+  
+  * copy the script and people.txt to `mysql` containter 
+  ***docker cp people.txt mysql:/tmp***
+  ***docker cp put.sh mysql:/tmp***
+  
+  * exec into `mysql` container
+  ```
+  docker exec -ti mysql bash
+  ```
+  
+  * goto tmp folder and run the script
+  ```
+  cd /tmp/
+  ./put.sh
+  ```
+  
+  output:
+  ```
+  ./put.sh
+mysql: [Warning] Using a password on the command line interface can be insecure.
+1, Denice, Caudle, 32 insserted successfully
+mysql: [Warning] Using a password on the command line interface can be insecure.
+2, Cherise, Olenick, 28 insserted successfully
+mysql: [Warning] Using a password on the command line interface can be insecure.
+3, Nohemi, Overlock, 34 insserted successfully
+mysql: [Warning] Using a password on the command line interface can be insecure.
+4, Tom, Fellers, 22 insserted successfully
+mysql: [Warning] Using a password on the command line interface can be insecure.
+5, Teri, Mess, 27 insserted successfully
+mysql: [Warning] Using a password on the command line interface can be insecure.
+6, Violette, Zawislak, 20 insserted successfully
+mysql: [Warning] Using a password on the command line interface can be insecure.
+7, Gisele, Cremeans, 20 insserted successfully
+mysql: [Warning] Using a password on the command line interface can be insecure.
+8, Rey, Sturdevant, 34 insserted successfully
+mysql: [Warning] Using a password on the command line interface can be insecure.
+9, Jeannine, Hysell, 30 insserted successfully
+mysql: [Warning] Using a password on the command line interface can be insecure.
+10, Preston, Manigault, 39 insserted successfully
+mysql: [Warning] Using a password on the command line interface can be insecure.
+11, Cinda, Dales, 21 insserted successfully
+mysql: [Warning] Using a password on the command line interface can be insecure.
+12, Shaniqua, Barnaby, 33 insserted successfully
+mysql: [Warning] Using a password on the command line interface can be insecure.
+13, Julieann, Fountaine, 39 insserted successfully
+mysql: [Warning] Using a password on the command line interface can be insecure.
+
+
+  ```
+  
+  * goto mysql db and verify if data is inserted
+
+```
+  mysql -u root -p 
+  1234
+  use people;
+  select * from register;
+ ```
+ 
+ ![register](https://github.com/jawad1989/Jenkins101/blob/master/images/17%20-%20show%20register%20table.PNG)
