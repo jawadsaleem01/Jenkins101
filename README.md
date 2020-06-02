@@ -28,7 +28,7 @@
  17. Create Jenkins job to run the script
  18. Persist your script on remote-host 
  19. Install Ansible on jenkins 
-  
+ 20. Create your first ansible inventory
    ***********
 # Jenkins101
     * [Install Jenkins Master Server](https://github.com/jawad1989/devops/tree/master/Jenkins)
@@ -873,3 +873,40 @@ cd ansible
 ls 
 # you will see the remote-key here
 ```
+
+# 20. Create your first ansible inventory
+1. first step is to going into jenkins-ansible directory and copying centos/remote-key here
+```
+cd ..jenkins/jenkins-ansible
+cp ../centos/remote-key .
+```
+2. now create a hosts file  `vi hosts`
+```
+[all:vars] 
+
+ansible_connection = ssh
+
+[test]   
+test1 ansible_host=remote_host ansible_user=remote_user ansible_private_key_file=/var/jenkins_home/ansible/remote-key  
+```
+3. copy the hosts to jenkins ansible volume
+```
+cp hosts ../jenkins_home/ansible
+```
+4. move into jenkins container and ping the remote-host from ansible where test1 is our alias
+```
+docker exec -ti jenkins bash
+ansible -i hosts -m ping test1
+
+```
+5. you will get below success message
+```
+test1 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/libexec/platform-python"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+```
+
