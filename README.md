@@ -1038,6 +1038,16 @@ value: jawad saleem
 
 # 26. Real Life Example JENKINS, ANSIBLE, NGINX, PHP, MYSQL and SHELL SCRIPTING
  ## Create a new database and table in mysql
+ 
+ prereq: create a new database `people` and new table `register`
+ ```
+ docker exec -ti mysql bash
+ mysql -u root -p
+ 1234
+ create database people;
+ use people;
+ create table register (id int(3), name varchar(50), lastname varchar(50), age int(3));
+ ```
  1. goto mysql container, create a new database and a table
   ```
   docker exec -ti mysql bash
@@ -1121,21 +1131,21 @@ while [ $counter -lt 50 ]; do
 done
   ```
   
-  * give execute permission to script
+  3. give execute permission to script
   ```
   chmod +x put.sh
   ```
   
-  * copy the script and people.txt to `mysql` containter 
+  4. copy the script and people.txt to `mysql` containter 
   ***docker cp people.txt mysql:/tmp***
   ***docker cp put.sh mysql:/tmp***
   
-  * exec into `mysql` container
+  5. exec into `mysql` container
   ```
   docker exec -ti mysql bash
   ```
   
-  * goto tmp folder and run the script
+  6.  goto tmp folder and run the script
   ```
   cd /tmp/
   ./put.sh
@@ -1175,7 +1185,7 @@ mysql: [Warning] Using a password on the command line interface can be insecure.
 
   ```
   
-  * goto mysql db and verify if data is inserted
+  7.  goto mysql db and verify if data is inserted
 
 ```
   mysql -u root -p 
