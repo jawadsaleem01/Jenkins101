@@ -875,6 +875,10 @@ ls
 ```
 
 # 20. Create your first ansible inventory
+[OFFICIAL ANSIBLE DESCRIPTION](https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html) Ansible works against multiple managed nodes or “hosts” in your infrastructure at the same time, using a list or group of lists know as inventory. Once your inventory is defined, you use patterns to select the hosts or groups you want Ansible to run against.
+
+The default location for inventory is a file called /etc/ansible/hosts. You can specify a different inventory file at the command line using the -i <path> option
+   
 1. first step is to going into jenkins-ansible directory and copying centos/remote-key here
 ```
 cd ..jenkins/jenkins-ansible
