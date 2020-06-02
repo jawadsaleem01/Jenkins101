@@ -34,6 +34,7 @@
  23. Execute Ansible Playbook fom jenkins job
  24. Pass paramters to ansible and jenkins
  25. Colorize your playbook output in Jenkins: AnsiColor Plugin
+ 26. Real Life Example JENKINS, ANSIBLE, NGINX, PHP, MYSQL and SHELL SCRIPTING
    ***********
 # Jenkins101
     * [Install Jenkins Master Server](https://github.com/jawad1989/devops/tree/master/Jenkins)
@@ -1034,3 +1035,16 @@ value: jawad saleem
   * in advanced check "Colorized stdout" and save
 3. Build the job
 ![Colored Console](https://github.com/jawad1989/Jenkins101/blob/master/images/16%20-%20Colored%20Output.PNG)
+
+# 26. Real Life Example JENKINS, ANSIBLE, NGINX, PHP, MYSQL and SHELL SCRIPTING
+ ## Create a new database and table in mysql
+ 1. goto mysql container, create a new database and a table
+  ```
+  docker exec -ti mysql bash
+  create database people;
+  use people;
+  create table register ( id int(3), name varchar(50), lastname varchar(50), age int(3));
+  show tables;
+  desc register;
+  ```
+  2. Create a bash script to feed your Database
