@@ -999,3 +999,27 @@ Hello Jawad
 
 ```
 # 24. Pass paramters to ansible and jenkins
+1. Now in this example we will modify our play book and instead of debug we will use debug so create a new file `jawad@jawad-VirtualBox:~/jenkins$ gedit jenkins_home/ansible/play.yml `
+
+```
+- hosts: test1
+  tasks:
+    debug:
+      msg: "{{ MSG }}"
+```
+
+2. Goto your jenkins job and add a string parameter 
+```
+NAME: ANSINLE_MSG
+value: jawad saleem
+```
+![paramter](https://github.com/jawad1989/Jenkins101/blob/master/images/12%20-%20a%20paramters.PNG)
+
+3. in build, click advance, and add new EXTRA VARIABLES give the values `KEY: MSG VALUE: ANSIBLE_MSG`
+![paramter](https://github.com/jawad1989/Jenkins101/blob/master/images/12-%20variables.PNG)
+
+4. build job and enter the paramter
+![paramter](https://github.com/jawad1989/Jenkins101/blob/master/images/13%20-%20build.PNG)
+
+5. Console output
+![console](https://github.com/jawad1989/Jenkins101/blob/master/images/14%20-%20console.PNG)
