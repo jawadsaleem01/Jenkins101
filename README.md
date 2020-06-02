@@ -1195,3 +1195,93 @@ mysql: [Warning] Using a password on the command line interface can be insecure.
  ```
  
  ![register](https://github.com/jawad1989/Jenkins101/blob/master/images/17%20-%20show%20register%20table.PNG)
+
+
+ ## Creae a Docker Nginx web server + php
+ 
+ 1. for running ngin we have to use centos7 thats why Dockerfile in  centos will be updated
+ 2. clonse he web/ folder in jenkins-ansible
+ 3. In web directory there is a Dockerfile
+ 
+ ```
+ FROM remote-host
+
+COPY ./conf/nginx.repo /etc/yum.repos.d/nginx.repo
+
+RUN                                                                          \
+  yum -y install nginx-1.12.2 openssl --enablerepo=nginx                  && \
+  yum -y install https://repo.ius.io/ius-release-el7.rpm                  && \
+  yum -y install                                                             \
+    php71u-fpm                                                               \
+    php71u-cli                                                               \
+    php71u-mysqlnd                                                           \
+    php71u-soap                                                              \
+    php71u-xml                                                               \
+    php71u-zip                                                               \
+    php71u-json                                                              \
+    php71u-mcrypt                                                            \
+    php71u-mbstring                                                          \
+    php71u-zip                                                               \
+    php71u-gd                                                                \
+     --enablerepo=ius-archive && yum clean all
+
+EXPOSE 80 443
+
+VOLUME /var/www/html /var/log/nginx /var/log/php-fpm /var/lib/php-fpm
+
+COPY ./conf/nginx.conf /etc/nginx/conf.d/default.conf
+
+COPY ./bin/start.sh /start.sh
+
+RUN chmod +x /start.sh
+
+CMD /start.sh
+ ```
+ this will use 'remote-host' Docker file as a pre-req to create the image, then we will configure nginx and install php. After that we will run the script
+ 
+ 3. goto your docker-compose.yml and add a new service `web`
+ ```
+ version: '3'
+services:
+  jenkins:
+    container_name: jenkins
+    image: jenkins/jenkins
+    build:
+      context: jenkins-ansible  #docker file path 
+    ports:
+      - "8080:8080"
+    volumes:
+      - $PWD/jenkins_home:/var/jenkins_home # left host vol : right docker vol
+    networks:
+      - net
+  remote_host:
+    container_name: remote-host
+    image: remote-host
+    build:
+      context: centos
+    volumes:
+      - "$PWD/aws-s3.sh:/tmp/script.sh"
+    networks:
+      - net
+  db_host: 
+    container_name: mysql
+    image: mysql:5.7
+    environment: 
+      - "MYSQL_ROOT_PASSWORD=1234"
+    volumes: 
+      - "$PWD/db_data:/var/lib/mysql"
+    networks:
+      - net
+  web:
+    container_name: web
+    image: ansible-web
+    build:
+      context: jenkins-ansible/web
+    ports:
+      - "80:80"
+    networks:
+      - net
+networks:
+  net: 
+
+ ```
