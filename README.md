@@ -29,6 +29,7 @@
  18. Persist your script on remote-host 
  19. Install Ansible on jenkins 
  20. Create your first ansible inventory
+ 21. Create Ansible first playbook
    ***********
 # Jenkins101
     * [Install Jenkins Master Server](https://github.com/jawad1989/devops/tree/master/Jenkins)
@@ -914,3 +915,56 @@ test1 | SUCCESS => {
 }
 ```
 
+
+# 21. Create Ansible first playbook
+
+playbooks are the basis for a really simple configuration management and multi-machine deployment system, unlike any that already exist, and one that is very well suited to deploying complex applications.
+
+1. goto jenkins-ansible directory and create a play.yml file `gedit play.yml`
+```
+- hosts: test1
+  tasks: 
+   - shell: echo Hello World > /tmp/ansible-file
+```
+
+2. copy the play.yml in volume of ansible
+```
+cp play.yml ../jenkins_home/ansible/
+```
+3. run the playbook
+```
+docker exec -ti jenkins bash
+cd $HOME/ansbile 
+ls 
+ansible-playbook -i hosts play.yml
+```
+output
+```
+jenkins@92300ec66809:~/ansible$ ansible-playbook -i hosts play.yml 
+
+PLAY [test1] ***********************************************************************************
+
+TASK [Gathering Facts] *************************************************************************
+ok: [test1]
+
+TASK [shell] ***********************************************************************************
+changed: [test1]
+
+PLAY RECAP *************************************************************************************
+test1                      : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+```
+
+4. goto remote host to verify the file in tmp directory
+```
+docker exec -ti remote-host bash
+cd /tmp/
+ls
+cat ansible-file
+```
+
+output:
+```
+[root@257da7ee86a1 tmp]# cat ansible-file 
+Hello World
+```
