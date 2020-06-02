@@ -33,7 +33,7 @@
  22. integrate Jenkins with Ansible (plugin)
  23. Execute Ansible Playbook fom jenkins job
  24. Pass paramters to ansible and jenkins
- 
+ 25. Colorize your playbook output in Jenkins: AnsiColor Plugin
    ***********
 # Jenkins101
     * [Install Jenkins Master Server](https://github.com/jawad1989/devops/tree/master/Jenkins)
@@ -1023,3 +1023,14 @@ value: jawad saleem
 
 5. Console output
 ![console](https://github.com/jawad1989/Jenkins101/blob/master/images/14%20-%20console.PNG)
+
+# 25. Colorize your playbook output in Jenkins: AnsiColor Plugin
+
+1. In Jenking Plugin Manager add a new plugin `AnsiColor` and install without restart
+![ansi color](https://github.com/jawad1989/Jenkins101/blob/master/images/15%20-%20ansi%20color.PNG)
+
+2. goto your jenkins job 
+  * in build check "Color ANSI Console Output"
+  * in advanced check "Colorized stdout" and save
+3. Build the job
+![Colored Console](https://github.com/jawad1989/Jenkins101/blob/master/images/16%20-%20Colored%20Output.PNG)
