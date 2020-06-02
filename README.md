@@ -30,6 +30,8 @@
  19. Install Ansible on jenkins 
  20. Create your first ansible inventory
  21. Create Ansible first playbook
+ 22. integrate Jenkins with Ansible
+ 
    ***********
 # Jenkins101
     * [Install Jenkins Master Server](https://github.com/jawad1989/devops/tree/master/Jenkins)
@@ -968,3 +970,11 @@ output:
 [root@257da7ee86a1 tmp]# cat ansible-file 
 Hello World
 ```
+#  22. integrate Jenkins with Ansible
+
+1. Login to your jenkins via browser and goto to `Manage jenkins`
+2. click `manage plugins` and goto available
+3. Search ansible and install without restart
+![installl ansible](https://github.com/jawad1989/Jenkins101/blob/master/images/9-install%20ansible%20plugin.PNG)
+4. once installed click restart and wait for restart
+![install ansible](https://github.com/jawad1989/Jenkins101/blob/master/images/9-b%20-install%20ansible%20plugin.PNG)
