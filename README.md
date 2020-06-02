@@ -32,6 +32,7 @@
  21. Create Ansible first playbook
  22. integrate Jenkins with Ansible (plugin)
  23. Execute Ansible Playbook fom jenkins job
+ 24. Pass paramters to ansible and jenkins
  
    ***********
 # Jenkins101
@@ -997,3 +998,4 @@ Jawad@jawad-VirtualBox:~/jenkins$ docker exec -ti remote-host bash
 Hello Jawad
 
 ```
+# 24. Pass paramters to ansible and jenkins
