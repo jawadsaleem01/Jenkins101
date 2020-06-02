@@ -30,7 +30,8 @@
  19. Install Ansible on jenkins 
  20. Create your first ansible inventory
  21. Create Ansible first playbook
- 22. integrate Jenkins with Ansible
+ 22. integrate Jenkins with Ansible (plugin)
+ 23. Execute Ansible Playbook fom jenkins job
  
    ***********
 # Jenkins101
@@ -978,3 +979,21 @@ Hello World
 ![installl ansible](https://github.com/jawad1989/Jenkins101/blob/master/images/9-install%20ansible%20plugin.PNG)
 4. once installed click restart and wait for restart
 ![install ansible](https://github.com/jawad1989/Jenkins101/blob/master/images/9-b%20-install%20ansible%20plugin.PNG)
+
+
+# 23. Execute Ansible Playbook fom jenkins job
+
+1. Create a new `Free Style Job`
+2. Goto Build and select `nvoke Ansible Playbook` in playbook path `/var/jenkins_home/ansible/play.yml` and select Intventory->File or Host with value `/var/jenkins_home/ansible/hosts`
+![ansible ](https://github.com/jawad1989/Jenkins101/blob/master/images/10-ansible%20play%20jenkins.PNG)
+
+3. Build the job,once successful
+![console](https://github.com/jawad1989/Jenkins101/blob/master/images/11%20-%20console%20output.PNG)
+
+4. goto remote host to verify the file
+```
+Jawad@jawad-VirtualBox:~/jenkins$ docker exec -ti remote-host bash
+[root@257da7ee86a1 /]# cat /tmp/ansible-file 
+Hello Jawad
+
+```
