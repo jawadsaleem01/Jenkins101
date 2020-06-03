@@ -1347,3 +1347,79 @@ networks:
  
  3. Now if we goto browser at port 80 we will see the table
  ![test html](https://github.com/jawad1989/Jenkins101/blob/master/images/18%20-%20display%20table.PNG)
+
+ ## Integrate Docker Server to Ansible inventory
+ For doing this you have to create a new connection in `hosts` file
+ 1. goto ansible volume in your local vm
+ ```
+ cd /home/jawad/jenkins/jenkins_home/ansible
+ ```
+ 2. update hosts file `gedit hosts` and add below rows
+ ```
+ [all:vars]
+
+ansible_connection = ssh
+
+[test]
+
+test1 ansible_host=remote_host ansible_user=remote_user ansible_private_key_file=/var/jenkins_home/ansible/remote-key
+web1 ansible_host=web ansible_user=remote_user ansible_private_key_file=/var/jenkins_home/ansible/remote-key0
+ ```
+ 
+ 3. create a new `.ansible.cfg` file `gedit .ansible.cfg` with below content
+ ```
+[ssh_connection]
+ssh_args = -C -o ControlMaster=auto -o ControlPersist=60s
+
+control_path = /dev/shm/cp%%h-%%p-%%r
+ ```
+ 
+ 4. goto jenkins container `docker exec -ti jenkins bash`
+ 5. goto ansible directory  `cd $HOME/ansible`
+ 6. run  command `ssh-keygen -f "/var/jenkins_home/.ssh/known_hosts" -R remote_host`
+ 7. test your connections
+ ```
+ jenkins@d8b78529f63e:~/ansible$ ansible -m ping -i hosts web1
+web1 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+
+ ```
+ 8. verify test1 connection also
+ ```
+ jenkins@d8b78529f63e:~/ansible$ ansible -m ping -i hosts test1
+Warning: the ECDSA host key for 'remote_host' differs from the key for the IP address '172.18.0.4'
+Offending key for IP in /var/jenkins_home/.ssh/known_hosts:2
+Matching host key in /var/jenkins_home/.ssh/known_hosts:5
+Are you sure you want to continue connecting (yes/no)? yes
+test1 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+ ```
+ 9. to test all connections use `ansible -m ping -i hosts all` command
+ ```
+ jenkins@d8b78529f63e:~/ansible$ ansible -m ping -i hosts all
+test1 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+web1 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+
+ ```
