@@ -1423,3 +1423,70 @@ web1 | SUCCESS => {
 }
 
  ```
+
+ ## Create a playbook to update web table
+ in table.j2 we are using [jinja2 template for passing vairable](https://jinja.palletsprojects.com/en/2.11.x/)
+ 
+ 1. create a new file `people.yml` in ansible directory
+ ```
+ jawad@jawad-VirtualBox:~/jenkins/jenkins_home/ansible$ cat people.yml 
+- hosts: web1
+  tasks:
+   - name: Transfer Template To Web Server
+     template: 
+       src: table.j2
+       dest: /var/www/html/index.php
+ ```
+ ![people yml](https://github.com/jawad1989/Jenkins101/blob/master/images/19%20-%20peope%20yml.PNG)
+ 
+ 2. now goto jenkins container and run the ansible playbook
+ ```
+ docker exec -ti jenkins bash
+ cd
+ cd ansible/
+jenkins@d8b78529f63e:~/ansible$ ansible-playbook -i hosts people.yml
+
+PLAY [web1] ************************************************************************************
+
+TASK [Gathering Facts] *************************************************************************
+ok: [web1]
+
+TASK [Transfer Template To Web Server] *********************************************************
+changed: [web1]
+
+PLAY RECAP *************************************************************************************
+web1                       : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+
+ ```
+ 3. update table.j2 
+ old 
+ ```
+ $sql = "SELECT id, name, lastname, age FROM register  where age = 25 ";
+ ```
+ new 
+ ```
+ $sql = "SELECT id, name, lastname, age FROM register {% if PEOPLE_AGE is defined %} where age = {{ PEOPLE_AGE }} {% endif %}";
+ ```
+ 3. goto browser and type `jenkins.local`
+ ![jenkins local](https://github.com/jawad1989/Jenkins101/blob/master/images/20%20-%20jenkins%20local.PNG)
+ 
+ 4. now pass a parameter to ansible-playbook to get people with age of 25
+ ```
+ansible-playbook -i hosts people.yml -e "PEOPLE_AGE=25"
+
+PLAY [web1] ************************************************************************************
+
+TASK [Gathering Facts] *************************************************************************
+ok: [web1]
+
+TASK [Transfer Template To Web Server] *********************************************************
+changed: [web1]
+
+PLAY RECAP *************************************************************************************
+web1                       : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+
+ ```
+ 5. goot browser and type `jenkins.local`
+ ![jenkins local](https://github.com/jawad1989/Jenkins101/blob/master/images/21%20-%20jenkins%2025%20years.PNG)
