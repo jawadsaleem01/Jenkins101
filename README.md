@@ -1460,6 +1460,7 @@ web1                       : ok=2    changed=1    unreachable=0    failed=0    s
 
  ```
  3. update table.j2 
+ 
  old 
  ```
  $sql = "SELECT id, name, lastname, age FROM register  where age = 25 ";
@@ -1490,3 +1491,24 @@ web1                       : ok=2    changed=1    unreachable=0    failed=0    s
  ```
  5. goot browser and type `jenkins.local`
  ![jenkins local](https://github.com/jawad1989/Jenkins101/blob/master/images/21%20-%20jenkins%2025%20years.PNG)
+
+
+ ## Create a jenkins job to run everything 
+ 1. Create a new job in jenkins
+ 2. add parameter `AGE`
+ ![aGe](https://github.com/jawad1989/Jenkins101/blob/master/images/22%20-%20parametes.PNG)
+ 
+ 3. Colorize
+ ![Color](https://github.com/jawad1989/Jenkins101/blob/master/images/22%20-b%20color.PNG)
+ 
+ 4. in build give path of play.yml and hosts(ansible inventory) file from jenkins container
+ ![invetory](https://github.com/jawad1989/Jenkins101/blob/master/images/22%20-%20build.PNG)
+ 
+ 5. Save and build with params
+ ![build](https://github.com/jawad1989/Jenkins101/blob/master/images/22%20-%20build%20with%20param.PNG)
+ 
+ 6. Check console logs
+ ![Console](https://github.com/jawad1989/Jenkins101/blob/master/images/22%20-%20console%20output.PNG)
+ 
+ 7. goto browser to confirm the change
+ ![browser](https://github.com/jawad1989/Jenkins101/blob/master/images/22%20-%20output%20table.PNG)
