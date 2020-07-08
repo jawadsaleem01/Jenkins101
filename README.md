@@ -97,7 +97,7 @@ services:
 
     container_name: jenkins
 
-    image: jenkins
+    image: jenkins/jenkins
 
     ports:
 
